@@ -39,6 +39,14 @@ namespace ExampleJWTAuthentication
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ExampleJWTAuthentication", Version = "v1" });
+                c.AddSecurityDefinition("basic", new OpenApiSecurityScheme
+                {
+                    Name = "Authorization",
+                    Type = SecuritySchemeType.Http,
+                    Scheme = "basic",
+                    In = ParameterLocation.Header,
+                    Description = "Basic Authorization header using the Bearer scheme."
+                });
             });
 
             services.AddAuthentication(x =>
@@ -81,6 +89,7 @@ namespace ExampleJWTAuthentication
                .AllowAnyHeader());
 
             app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
